@@ -10,12 +10,15 @@ public class Routine : MonoBehaviour
     [SerializeField]
     private bool GoBack = false;
     private bool isgoing = true;
+    private bool isChasing = false;
     private NavMeshAgent agent;
     private int currentPoint = 0;
+    private ConeVision ConeVision;
     // Start is called before the first frame update
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        ConeVision = GetComponentInChildren<ConeVision>();
     }
     void Start()
     {
@@ -25,6 +28,11 @@ public class Routine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(ConeVision.m_target != null && !isChasing )
+        {
+            chasing();
+            isChasing = true;
+        }
         if (GoBack)
         {
             if(isgoing)
@@ -39,6 +47,10 @@ public class Routine : MonoBehaviour
         else
         {
             GoToNextPoint();
+        }
+        if(ConeVision.m_target == null)
+        {
+            isChasing=false;
         }
     }
 
@@ -82,5 +94,9 @@ public class Routine : MonoBehaviour
             }
             agent.SetDestination(_Ronde[currentPoint].position);
         }
+    }
+    private void chasing()
+    {
+        agent.SetDestination(ConeVision.m_target.transform.position);
     }
 }
