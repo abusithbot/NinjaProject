@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ConeVision : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class ConeVision : MonoBehaviour
             if (Physics.Raycast(transform.position, rayDirection, out hit,Mathf.Infinity, playerLayer)) 
             {
               m_target = other.gameObject;
+                GetComponentInParent<NavMeshAgent>().SetDestination(other.transform.position);
             }
         }
     }
