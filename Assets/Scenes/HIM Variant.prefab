@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5267426696736963722, guid: ff3aa94e24d078e4683ad3947d7ec4ab, type: 3}
+      propertyPath: snack
+      value: 
+      objectReference: {fileID: 11400000, guid: 8a353685736b8b4429e4dff8897d00f6, type: 2}
     - target: {fileID: 7132592134434166001, guid: ff3aa94e24d078e4683ad3947d7ec4ab, type: 3}
       propertyPath: m_Name
       value: HIM Variant

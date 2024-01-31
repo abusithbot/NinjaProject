@@ -31,6 +31,7 @@ public class CollisionPlayer : MonoBehaviour
     {
         if (snack.value == 1)
         {
+            Debug.Log("clik");
             snack.value--;
             Time.timeScale = 1;
             GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(false);

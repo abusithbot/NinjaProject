@@ -8,7 +8,7 @@ public class PlayerMovements : MonoBehaviour
     private Transform cameraTransform;
     private Rigidbody rb;
     public float movespeed = 5;
-    public float gravity = 5;
+    public float gravity = 200;
     // Start is called before the first frame update
     void Start()
     {
