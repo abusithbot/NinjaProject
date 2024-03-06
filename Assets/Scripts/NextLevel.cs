@@ -14,4 +14,5 @@ public class NextLevel : MonoBehaviour
         Time.timeScale = 1f;
         snack.value = 0;
     }
+    
 }

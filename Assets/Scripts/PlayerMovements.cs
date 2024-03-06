@@ -9,6 +9,7 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody rb;
     public float movespeed = 5;
     public float gravity = 200;
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class PlayerMovements : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,23 @@ public class PlayerMovements : MonoBehaviour
         //direction = (cameraTransform.forward * Input.GetAxis("Vertical") + cameraTransform.right * Input.GetAxis("Horizontal")) * movespeed;
         direction = cameraTransform.forward * Input.GetAxis("Vertical") + cameraTransform.right * Input.GetAxis("Horizontal");
         direction.y = 0;
+
+        if (direction.magnitude > 0)
+        {
+            Vector3 lookDirection = cameraTransform.forward;
+            lookDirection.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookDirection);
+            rotation = Quaternion.RotateTowards(rb.rotation, rotation, movespeed);
+            rb.rotation = rotation;
+
+        }
+
+        if (Input.GetAxis("Vertical") > 0)
+        {
+            animator.SetBool("Walking", true);
+            Debug.Log("ok");
+        }
+
     }
 
     private void FixedUpdate()
