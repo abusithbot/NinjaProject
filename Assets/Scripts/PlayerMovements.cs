@@ -43,6 +43,10 @@ public class PlayerMovements : MonoBehaviour
             animator.SetBool("Walking", true);
             Debug.Log("ok");
         }
+        else
+        {
+            animator.SetBool("Walking", false);
+        }
 
     }
 
