@@ -1,3 +1,4 @@
+using SimpleInputNamespace;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody rb;
     public float movespeed = 5;
     public float gravity = 200;
+    public Joystick joystick;
     Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +21,7 @@ public class PlayerMovements : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        joystick = GetComponent<Joystick>();
     }
 
     // Update is called once per frame
@@ -41,13 +44,11 @@ public class PlayerMovements : MonoBehaviour
         if (Input.GetAxis("Vertical") > 0)
         {
             animator.SetBool("Walking", true);
-            Debug.Log("ok");
         }
         else
         {
             animator.SetBool("Walking", false);
         }
-
     }
 
     private void FixedUpdate()
