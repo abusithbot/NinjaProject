@@ -10,7 +10,6 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody rb;
     public float movespeed = 5;
     public float gravity = 200;
-    public Joystick joystick;
     Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +20,6 @@ public class PlayerMovements : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        joystick = GetComponent<Joystick>();
     }
 
     // Update is called once per frame
