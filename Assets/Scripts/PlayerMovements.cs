@@ -8,7 +8,7 @@ public class PlayerMovements : MonoBehaviour
     private Vector3 direction = new Vector3(); //direction du joueur
     private Transform cameraTransform;
     private Rigidbody rb;
-    public float movespeed = 5;
+    public float movespeed = 8;
     public float gravity = 200;
     Animator animator;
     // Start is called before the first frame update
@@ -38,14 +38,13 @@ public class PlayerMovements : MonoBehaviour
             rb.rotation = rotation;
 
         }
+        // Déterminez la rotation du personnage pour faire face à la direction de déplacement
+        animator.SetBool("Walking", direction != Vector3.zero);
 
-        if (Input.GetAxis("Vertical") > 0)
+        // Déterminez la rotation du personnage pour faire face à la direction de déplacement
+        if (direction != Vector3.zero)
         {
-            animator.SetBool("Walking", true);
-        }
-        else
-        {
-            animator.SetBool("Walking", false);
+            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 
