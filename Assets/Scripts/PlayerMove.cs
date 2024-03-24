@@ -10,11 +10,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float speed = 8;
     Animator animator;
     Camera mainCamera;
-    private Rigidbody rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         playerinput = GetComponent<PlayerInput>();
         moveAction = playerinput.actions.FindAction("Move");
         animator = GetComponent<Animator>();
@@ -39,7 +37,21 @@ public class PlayerMove : MonoBehaviour
         Vector3 movementDirection = (cameraForward * directionInput.y + cameraRight * directionInput.x).normalized;
 
         // Déplacer le joueur
-        transform.position += movementDirection * speed * Time.deltaTime;
+        Vector3 newPosition = transform.position + movementDirection * speed * Time.deltaTime;
+
+        // Vérifier si le nouveau positionnement entraîne une collision avec un mur
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, movementDirection, out hit, speed * Time.deltaTime))
+        {
+            if (hit.collider.tag == "Wall")
+            {
+                // Si le joueur va entrer en collision avec un mur, n'autorisez pas le déplacement dans cette direction
+                return;
+            }
+        }
+
+        // Si aucun mur n'est rencontré, déplacez le joueur
+        transform.position = newPosition;
 
         // Orienter le joueur vers la direction de la caméra
         if (movementDirection != Vector3.zero)
