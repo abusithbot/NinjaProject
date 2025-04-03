@@ -12,7 +12,7 @@ public class Win : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision enter");
-        if (other.gameObject.CompareTag("HIM"))
+        if (other.gameObject.CompareTag("Player"))
         {
             GameObject.Find("Canvas").transform.Find("Winner").gameObject.SetActive(true);
             Time.timeScale = 0;
@@ -20,7 +20,7 @@ public class Win : MonoBehaviour
     }
     private void OnCollisionExit(UnityEngine.Collision collision)
     {
-        if (collision.gameObject.CompareTag("HIM"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             GameObject.Find("Canvas").transform.Find("Winner").gameObject.SetActive(true);
         }

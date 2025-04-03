@@ -8,8 +8,8 @@ public class Snacks : MonoBehaviour
     [SerializeField]
     IntSO snack;
     private void OnTriggerEnter(Collider other)
-    { 
-        if (snack != null)
+    {
+        if (snack != null && other.CompareTag("Player"))
         {
             snack.ItemCollected();
             gameObject.SetActive(false);

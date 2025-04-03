@@ -5,56 +5,65 @@ using UnityEngine.AI;
 
 public class Routine : MonoBehaviour
 {
-    [SerializeField]
-    private Transform[] _Ronde;
-    [SerializeField]
-    private bool GoBack = false;
+    public Transform[] _Ronde;
+    public bool GoBack = false;
     private bool isgoing = true;
-    private bool isChasing = false;
-    private NavMeshAgent agent;
-    private int currentPoint = 0;
-    private ConeVision ConeVision;
-    // Start is called before the first frame update
+    public bool isChasing = false;
+    public NavMeshAgent agent;
+    public int currentPoint = 0;
+    public ConeVision ConeVision;
+    private Animator animator;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         ConeVision = GetComponentInChildren<ConeVision>();
-    }
-    void Start()
-    {
-        agent.SetDestination(_Ronde[currentPoint].position); 
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        agent.SetDestination(_Ronde[currentPoint].position);
+    }
+
     void Update()
     {
-        if(ConeVision.m_target != null && !isChasing )
+        if (ConeVision.m_target != null && !isChasing)
         {
-            chasing();
+            animator.SetBool("isChasing", true);
             isChasing = true;
         }
-        if (GoBack)
+        else if (ConeVision.m_target == null && isChasing)
         {
-            if(isgoing)
+            animator.SetBool("isChasing", false);
+            isChasing = false;
+        }
+
+        if (!isChasing)
+        {
+            if (GoBack)
             {
-             GoToNextPoint();
+                if (isgoing)
+                {
+                    GoToNextPoint();
+                }
+                else
+                {
+                    GoToPreviousPoint();
+                }
             }
             else
             {
-                GoToPrevioustPoint();
+                GoToNextPoint();
             }
         }
         else
         {
-            GoToNextPoint();
-        }
-        if(ConeVision.m_target == null)
-        {
-            isChasing=false;
+            ChaseTarget();
         }
     }
 
-    private void GoToNextPoint()
+    public void GoToNextPoint()
     {
         if (agent.remainingDistance <= 1f)
         {
@@ -62,41 +71,47 @@ public class Routine : MonoBehaviour
 
             if (currentPoint >= _Ronde.Length)
             {
-                if(GoBack)
+                if (GoBack)
                 {
-                 isgoing = false;
+                    isgoing = false;
                     currentPoint = _Ronde.Length - 1;
                 }
                 else
                 {
-                 currentPoint = 0;
-                }
-            }
-            agent.SetDestination(_Ronde[currentPoint].position);
-        }
-    }private void GoToPrevioustPoint()
-    {
-        if (agent.remainingDistance <= 1f)
-        {
-            currentPoint--;
-
-            if (currentPoint < 0 )
-            {
-                if(GoBack)
-                {
-                  isgoing = true;
-                  currentPoint = 0;
-                }
-                else
-                {
-                 currentPoint = _Ronde.Length - 1;
+                    currentPoint = 0;
                 }
             }
             agent.SetDestination(_Ronde[currentPoint].position);
         }
     }
-    private void chasing()
+
+    public void GoToPreviousPoint()
     {
-        agent.SetDestination(ConeVision.m_target.transform.position);
+        if (agent.remainingDistance <= 1f)
+        {
+            currentPoint--;
+
+            if (currentPoint < 0)
+            {
+                if (GoBack)
+                {
+                    isgoing = true;
+                    currentPoint = 0;
+                }
+                else
+                {
+                    currentPoint = _Ronde.Length - 1;
+                }
+            }
+            agent.SetDestination(_Ronde[currentPoint].position);
+        }
+    }
+
+    public void ChaseTarget()
+    {
+        if (ConeVision.m_target != null)
+        {
+            agent.SetDestination(ConeVision.m_target.transform.position);
+        }
     }
 }

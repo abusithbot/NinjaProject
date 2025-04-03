@@ -12,7 +12,7 @@ public class ConeVision : MonoBehaviour
     public GameObject m_target;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HIM"))
+        if (other.CompareTag("Player"))
         {
             Debug.Log("griller");
             Vector3 rayDirection = other.transform.position - transform.position;
@@ -27,7 +27,7 @@ public class ConeVision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("HIM"))
+        if (other.CompareTag("Player"))
         {
             m_target = null;
         }

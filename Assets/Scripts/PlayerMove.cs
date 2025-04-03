@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     PlayerInput playerinput;
     InputAction moveAction;
+    InputAction lookAction;
     [SerializeField] float speed = 8;
     Animator animator;
     Camera mainCamera;
@@ -15,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     {
         playerinput = GetComponent<PlayerInput>();
         moveAction = playerinput.actions.FindAction("Move");
+        lookAction = playerinput.actions.FindAction("Look");
         animator = GetComponent<Animator>();
         mainCamera = Camera.main;
     }

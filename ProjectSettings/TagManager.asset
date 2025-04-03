@@ -6,6 +6,9 @@ TagManager:
   tags:
   - HIM
   - Wall
+  - Snitch
+  - Vision
+  - Win
   layers:
   - Default
   - TransparentFX

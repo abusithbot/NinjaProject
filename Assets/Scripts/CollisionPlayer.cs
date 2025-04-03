@@ -10,53 +10,47 @@ public class CollisionPlayer : MonoBehaviour
 
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        if (collision.gameObject.CompareTag("HIM"))
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Snitch"))
         {
-            GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(true);
+            Debug.Log("ton pere");
             Time.timeScale = 0;
-            ops = collision.gameObject;
-        }
-
-        if (collision.gameObject.CompareTag("HIM"))
-        {
-            if (snack.value == 0)
-            {
-              GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(true); 
-              GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(false); 
-            }
+            ficha();
         }
     }
-
-    public void Change()
+    public void ficha ()
     {
-        if (snack.value == 1)
+        if (snack.value > 0) // ou cas par cas = || altgr 6
         {
             Debug.Log("clik");
-            snack.value--;
-            Time.timeScale = 1;
-            GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(false);
-            GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(false);
+            //GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(false);
+            GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(true);            
+        }
+        else
+        {
+            Debug.Log("0");
+            GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(true);
+        }
+    }
+    public void Change()
+    {
+        if (snack.value > 0)
+        {
+            Debug.Log("clik");              
             if (ops != null) 
             ops.GetComponent<CapsuleCollider>().enabled = false;
-        }
-        else if (snack.value == 2)
-        {
-            snack.value --;
-            Time.timeScale = 1;
-            GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(false);
             GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(false);
+            snack.value--;
+
+        }
+        else
+        {
+            Debug.Log("0");
             if (ops != null)
-            ops.GetComponent<CapsuleCollider>().enabled = false;
-        }
-        else if (snack.value == 3)
-        {
-            snack.value --;
-            Time.timeScale = 1;
-            GameObject.Find("Canvas").transform.Find("GameOver").gameObject.SetActive(false);
+                ops.GetComponent<CapsuleCollider>().enabled = false;
             GameObject.Find("Canvas").transform.Find("Exchange").gameObject.SetActive(false);
-            if(ops != null)
-            ops.GetComponent<CapsuleCollider>().enabled = false;
         }
+        Time.timeScale = 1;
     }
     // Start is called before the first frame update
     void Start()
